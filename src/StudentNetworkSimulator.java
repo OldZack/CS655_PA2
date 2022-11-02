@@ -98,6 +98,14 @@ public class StudentNetworkSimulator extends NetworkSimulator
     // state information for A or B.
     // Also add any necessary methods (e.g. checksum of a String)
 
+    // Variables for the sender (A)
+    // Stores the data that is not sent yet.
+    private Queue<Packet> unsentBuffer_a;
+    // Stores the data that is sent but might require resent.
+    private Queue<Packet> resentBuffer_a;
+    private int nextSeqNum_a;
+    private int lastAckNum_a;
+
     // This is the constructor.  Don't touch!
     public StudentNetworkSimulator(int numMessages,
                                    double loss,
@@ -114,6 +122,20 @@ public class StudentNetworkSimulator extends NetworkSimulator
         RxmtInterval = delay;
     }
 
+    // This function copies the head packet from the queue,
+    // sent it and update relevant values.
+    protected void sendPacket(Queue<Packet> q){
+        stopTimer(0);
+        if (q.isEmpty()){
+            return;
+        }
+        toLayer3(0, q.peek());
+        startTimer(0, RxmtInterval);
+        if (q.equals(unsentBuffer_a)){
+            resentBuffer_a.add(unsentBuffer_a.poll());
+        }
+    }
+
 
     // This routine will be called whenever the upper layer at the sender [A]
     // has a message to send.  It is the job of your protocol to insure that
@@ -121,7 +143,23 @@ public class StudentNetworkSimulator extends NetworkSimulator
     // the receiving upper layer.
     protected void aOutput(Message message)
     {
+        // Generate packet
+        Packet pkt = new Packet(nextSeqNum_a, -1, message.getData().hashCode(), message.getData());
 
+        // Check if the packet can be sent right away.
+        if (resentBuffer_a.size() < WindowSize){
+            resentBuffer_a.add(pkt);
+            sendPacket(resentBuffer_a);
+        }
+        else{
+            unsentBuffer_a.add(pkt);
+        }
+
+        // Increase the next sequence number.
+        nextSeqNum_a += 1;
+        if (nextSeqNum_a == 2*WindowSize){
+            nextSeqNum_a = 0;
+        }
     }
 
     // This routine will be called whenever a packet sent from the B-side
@@ -130,7 +168,22 @@ public class StudentNetworkSimulator extends NetworkSimulator
     // sent from the B-side.
     protected void aInput(Packet packet)
     {
+        int ackNum = packet.getAcknum();
 
+        if (packet.getSeqnum() == -1 && packet.getPayload() == "" && 0 <= ackNum && ackNum < 2*WindowSize){
+            if (ackNum == lastAckNum_a){
+                sendPacket(resentBuffer_a);
+            }
+            else {
+                if (ackNum < lastAckNum_a) {
+                    ackNum += 2*WindowSize;
+                }
+                for (int i = 0; i < (ackNum-lastAckNum_a); i++){
+                    resentBuffer_a.poll();
+                    sendPacket(unsentBuffer_a);
+                }
+            }
+        }
     }
 
     // This routine will be called when A's timer expires (thus generating a
@@ -139,7 +192,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
     // for how the timer is started and stopped.
     protected void aTimerInterrupt()
     {
-
+        sendPacket(resentBuffer_a);
     }
 
     // This routine will be called once, before any of your other A-side
@@ -148,7 +201,10 @@ public class StudentNetworkSimulator extends NetworkSimulator
     // of entity A).
     protected void aInit()
     {
-
+        unsentBuffer_a = new LinkedList<Packet>();
+        resentBuffer_a = new LinkedList<Packet>();
+        nextSeqNum_a = 0;
+        lastAckNum_a = 0;
     }
 
     // This routine will be called whenever a packet sent from the B-side
