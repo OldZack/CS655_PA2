@@ -270,6 +270,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
             /**When current_B packet is received*/
             while(buffer_B.get(wanted_B) != null){
                 toLayer5(buffer_B.get(wanted_B).getPayload());
+                System.out.println("what "+ buffer_B.get(wanted_B).getSeqnum()+" hell "+ buffer_B.get(wanted_B).getPayload());
 
                 deliveredPktNum += 1;
 
