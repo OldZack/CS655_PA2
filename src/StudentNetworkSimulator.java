@@ -93,6 +93,12 @@ public class StudentNetworkSimulator extends NetworkSimulator
     private double RxmtInterval;
     private int LimitSeqNo;
 
+    private HashMap<Integer,Packet> buffer_B;
+    //window notation
+    private int wanted_B;
+    private int max_B;
+
+
     // Add any necessary class variables here.  Remember, you cannot use
     // these variables to send messages error free!  They can only hold
     // state information for A or B.
@@ -207,12 +213,62 @@ public class StudentNetworkSimulator extends NetworkSimulator
         lastAckNum_a = 0;
     }
 
+
+    protected void b_send_ACK(int ack){
+        Packet p = new Packet(-1,ack,-1,null);
+        toLayer3(B,p);
+    }
+
     // This routine will be called whenever a packet sent from the B-side
     // (i.e. as a result of a toLayer3() being done by an A-side procedure)
     // arrives at the B-side.  "packet" is the (possibly corrupted) packet
     // sent from the A-side.
+    //上传的+1
     protected void bInput(Packet packet)
     {
+        String msg = packet.getPayload();
+        int p_seq = packet.getSeqnum();
+        int checksum = msg.hashCode();
+        if (packet.getChecksum() != checksum){
+            System.out.println("Pkg lost/corrupted");
+            //corrupted ++;
+            return;
+        }
+        if (p_seq == wanted_B){
+            buffer_B.put(wanted_B,packet);
+            /**When current_B packet is received*/
+            while(buffer_B.get(wanted_B) != null){
+                toLayer5(buffer_B.get(wanted_B).getPayload());
+                buffer_B.remove(wanted_B);
+                max_B = (max_B+1)%LimitSeqNo;
+                wanted_B = (wanted_B+1)%LimitSeqNo;
+            }
+            b_send_ACK(wanted_B);
+        }else {
+            for (int key:buffer_B.keySet()) {
+                if (p_seq==key){
+                    System.out.println("duplicate");
+                    b_send_ACK(wanted_B);
+                    return;
+                }
+            }
+            if (max_B < wanted_B){
+                if (p_seq <= max_B || p_seq > wanted_B){
+                    buffer_B.put(p_seq,packet);
+                }else {
+                    System.out.println("sent duplicate");
+                    b_send_ACK(wanted_B);
+                }
+            }
+            if (max_B > wanted_B){
+                if (p_seq > wanted_B && p_seq <=max_B){
+                    buffer_B.put(p_seq,packet);
+                }else {
+                    System.out.println("sent duplicate");
+                    b_send_ACK(wanted_B);
+                }
+            }
+        }
 
     }
 
@@ -222,7 +278,9 @@ public class StudentNetworkSimulator extends NetworkSimulator
     // of entity B).
     protected void bInit()
     {
-
+        buffer_B = new HashMap<>();
+        wanted_B = 0;
+        max_B = (wanted_B+WindowSize) % LimitSeqNo;
     }
 
     // Use to print final statistics
