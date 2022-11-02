@@ -118,6 +118,8 @@ public class StudentNetworkSimulator extends NetworkSimulator
     private Queue<Packet> resentBuffer_a;
     private int nextSeqNum_a;
     private int lastAckNum_a;
+    private boolean timerFlag_a;
+    private int currSeqNum_a;
 
     // Variables for the receiver (B)
     private HashMap<Integer,Packet> buffer_B;
@@ -146,19 +148,26 @@ public class StudentNetworkSimulator extends NetworkSimulator
         ackPktNum = 0;
         corruptPktNum = 0;
         receivedPktNum = 0;
+        currSeqNum_a = 0;
     }
 
     // This function copies the head packet from the queue,
     // sent it and update relevant values.
     protected void sendPacket(Queue<Packet> q){
-         //stopTimer(0);
         if (q.isEmpty()){
             return;
         }
         toLayer3(0, q.peek());
-        //startTimer(0, RxmtInterval);
+        if (timerFlag_a == false){
+            startTimer(0, RxmtInterval);
+            timerFlag_a = true;
+        }
         if (q.equals(unsentBuffer_a)){
             resentBuffer_a.add(unsentBuffer_a.poll());
+            originPktNum += 1;
+        }
+        else{
+            retransPktNum += 1;
         }
     }
 
@@ -171,17 +180,11 @@ public class StudentNetworkSimulator extends NetworkSimulator
     {
         // Generate packet
         Packet pkt = new Packet(nextSeqNum_a, -1, message.getData().hashCode(), message.getData());
-
+        unsentBuffer_a.add(pkt);
         // Check if the packet can be sent right away.
         if (resentBuffer_a.size() < WindowSize){
-            resentBuffer_a.add(pkt);
-            sendPacket(resentBuffer_a);
-            originPktNum += 1;
+            sendPacket(unsentBuffer_a);
         }
-        else{
-            unsentBuffer_a.add(pkt);
-        }
-
         // Increase the next sequence number.
         nextSeqNum_a += 1;
         if (nextSeqNum_a == 2*WindowSize){
@@ -195,27 +198,33 @@ public class StudentNetworkSimulator extends NetworkSimulator
     // sent from the B-side.
     protected void aInput(Packet packet)
     {
-        int ackNum = packet.getAcknum();
+        int originAckNum = packet.getAcknum();
+        int ackNum = originAckNum;
         receivedPktNum += 1;
 
         if (packet.getSeqnum() == -1 && packet.getPayload().equals("") && ackNum >= 0 && ackNum < 2*WindowSize){
+            // Stop timer when ack received.
+            if (timerFlag_a == true){
+                stopTimer(0);
+                timerFlag_a = false;
+            }
             if (ackNum == lastAckNum_a){
                 sendPacket(resentBuffer_a);
-                retransPktNum += 1;
             }
             else {
                 if (ackNum < lastAckNum_a) {
                     ackNum += 2*WindowSize;
+                    System.out.println("Here: " + ackNum + " "+  lastAckNum_a);
                 }
                 for (int i = 0; i < (ackNum-lastAckNum_a); i++){
                     resentBuffer_a.poll();
                     sendPacket(unsentBuffer_a);
-                    originPktNum += 1;
                 }
             }
+            lastAckNum_a = originAckNum;
         }
         else{
-            System.out.println("Ack Pkt Corrupted.");
+            System.out.println("Ack Pkt Corrupted!");
             corruptPktNum += 1;
         }
     }
@@ -226,8 +235,12 @@ public class StudentNetworkSimulator extends NetworkSimulator
     // for how the timer is started and stopped.
     protected void aTimerInterrupt()
     {
+        System.out.println("Timeout, resend packet.");
+        if (timerFlag_a == true){
+            stopTimer(0);
+            timerFlag_a = false;
+        }
         sendPacket(resentBuffer_a);
-        retransPktNum += 1;
     }
 
     // This routine will be called once, before any of your other A-side
@@ -261,7 +274,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
         int p_seq = packet.getSeqnum();
         int checksum = msg.hashCode();
         if (packet.getChecksum() != checksum){
-            System.out.println("Pkg lost/corrupted");
+            System.out.println("Pkt corrupted");
             corruptPktNum += 1;
             return;
         }
