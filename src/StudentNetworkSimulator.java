@@ -230,8 +230,8 @@ public class StudentNetworkSimulator extends NetworkSimulator
             }
             // If duplicate ack received, resend next missing data.
             if (ackNum == lastAckNum_a){
-                sendPacket(resentBuffer_a);
                 System.out.println("Duplicate ack received, resend the next missing packet.");
+                sendPacket(resentBuffer_a);
             }
             else {
                 // If the new ack number is smaller than the old one, add RWS to get the number of newly acked packets.
