@@ -173,6 +173,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
         if (timerFlag_a == false){
             startTimer(0, RxmtInterval);
             timerFlag_a = true;
+            System.out.println("Duplicate ack received, resend the next missing packet.");
         }
         if (q.equals(unsentBuffer_a)){
             // Record the sent time to calculate RTT & communication time
@@ -220,9 +221,9 @@ public class StudentNetworkSimulator extends NetworkSimulator
         int originAckNum = packet.getAcknum();
         int ackNum = originAckNum;
         receivedPktNum += 1;
-        System.out.println("Packet received at A with ack number " + originAckNum);
         // Check if the packet is corrupted.
         if (packet.getSeqnum() == -1 && packet.getPayload().equals("") && ackNum >= 0 && ackNum < 2*WindowSize){
+            System.out.println("Packet received at A with ack number " + originAckNum);
             // Stop timer when ack received.
             if (timerFlag_a == true){
                 stopTimer(0);
@@ -288,7 +289,6 @@ public class StudentNetworkSimulator extends NetworkSimulator
         Packet p = new Packet(-1,ack,-1);
         System.out.println("Packet sent by B with ack number " + ack);
         toLayer3(B,p);
-        System.out.println("this is "+ack);
         ackPktNum += 1;
     }
 
@@ -303,7 +303,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
         String msg = packet.getPayload();
         int p_seq = packet.getSeqnum();
         int checksum = msg.hashCode();
-        if (packet.getChecksum() != checksum){
+        if (packet.getChecksum() != checksum || p_seq < 0 || p_seq >= 2*WindowSize || packet.getAcknum() != -1){
             System.out.println("Checksum failed, packet from A is corrupted!");
             corruptPktNum += 1;
             return;
@@ -331,10 +331,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
             buffer_B.put(wanted_B,packet);
             /**When current_B packet is received*/
             while(buffer_B.get(wanted_B) != null){
-                System.out.println("tery "+buffer_B.toString());
                 toLayer5(buffer_B.get(wanted_B).getPayload());
-                System.out.println("what "+ buffer_B.get(wanted_B).getSeqnum()+" hell "+ buffer_B.get(wanted_B).getPayload());
-
                 deliveredPktNum += 1;
 
                 buffer_B.remove(wanted_B);

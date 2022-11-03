@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="69774017-4603-4780-8f14-e9e97ed5369f" name="Changes" comment="stop-and-wait added">
+    <list default="true" id="69774017-4603-4780-8f14-e9e97ed5369f" name="Changes" comment="Delete Some Printouts">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/StudentNetworkSimulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/StudentNetworkSimulator.java" afterDir="false" />
     </list>
@@ -16,6 +16,9 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Rebase.Settings">
+    <option name="NEW_BASE" value="origin/master" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -88,12 +91,12 @@
       <option name="project" value="LOCAL" />
       <updated>1667445870989</updated>
     </task>
-    <task id="LOCAL-00005" summary="stop-and-wait added">
-      <created>1667480755653</created>
+    <task id="LOCAL-00005" summary="Delete Some Printouts">
+      <created>1667496824433</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1667480755653</updated>
+      <updated>1667496824433</updated>
     </task>
     <option name="localTasksCounter" value="6" />
     <servers />
@@ -113,7 +116,7 @@
     <MESSAGE value="Sender side implemented" />
     <MESSAGE value="Some bugs fixed" />
     <MESSAGE value="Added RTT and CT calculation" />
-    <MESSAGE value="stop-and-wait added" />
-    <option name="LAST_COMMIT_MESSAGE" value="stop-and-wait added" />
+    <MESSAGE value="Delete Some Printouts" />
+    <option name="LAST_COMMIT_MESSAGE" value="Delete Some Printouts" />
   </component>
 </project>
