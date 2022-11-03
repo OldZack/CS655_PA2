@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="69774017-4603-4780-8f14-e9e97ed5369f" name="Changes" comment="Some bugs fixed">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/StudentNetworkSimulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/StudentNetworkSimulator.java" afterDir="false" />
-    </list>
+    <list default="true" id="69774017-4603-4780-8f14-e9e97ed5369f" name="Changes" comment="not using2" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
