@@ -259,6 +259,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
     protected void b_send_ACK(int ack){
         Packet p = new Packet(-1,ack,-1);
         toLayer3(B,p);
+        System.out.println("this is "+ack);
         ackPktNum += 1;
     }
 

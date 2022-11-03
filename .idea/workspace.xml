@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="69774017-4603-4780-8f14-e9e97ed5369f" name="Changes" comment="Sender side implemented">
+    <list default="true" id="69774017-4603-4780-8f14-e9e97ed5369f" name="Changes" comment="not using">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/StudentNetworkSimulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/StudentNetworkSimulator.java" afterDir="false" />
     </list>
@@ -31,12 +31,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/xiao/Desktop/CS655/CS655_PA2_Part2"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Project" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Project" />
@@ -90,6 +91,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Sender side implemented" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sender side implemented" />
+    <MESSAGE value="not using" />
+    <option name="LAST_COMMIT_MESSAGE" value="not using" />
   </component>
 </project>
