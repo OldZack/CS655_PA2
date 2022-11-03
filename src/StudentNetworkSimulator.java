@@ -173,7 +173,6 @@ public class StudentNetworkSimulator extends NetworkSimulator
         if (timerFlag_a == false){
             startTimer(0, RxmtInterval);
             timerFlag_a = true;
-            System.out.println("Duplicate ack received, resend the next missing packet.");
         }
         if (q.equals(unsentBuffer_a)){
             // Record the sent time to calculate RTT & communication time
@@ -232,6 +231,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
             // If duplicate ack received, resend next missing data.
             if (ackNum == lastAckNum_a){
                 sendPacket(resentBuffer_a);
+                System.out.println("Duplicate ack received, resend the next missing packet.");
             }
             else {
                 // If the new ack number is smaller than the old one, add RWS to get the number of newly acked packets.
