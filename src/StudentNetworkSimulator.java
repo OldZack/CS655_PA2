@@ -341,6 +341,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
             b_send_ACK(wanted_B);
         }else {
             for (int key:buffer_B.keySet()) {
+                /**duplicated pkts*/
                 if (p_seq==key){
                     b_send_ACK(wanted_B);
                     return;
@@ -349,6 +350,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
             if (max_B < wanted_B){
                 if (p_seq <= max_B || p_seq > wanted_B){
                     buffer_B.put(p_seq,packet);
+                    b_send_ACK(wanted_B);
                 }else {
                     b_send_ACK(wanted_B);
                 }
@@ -356,6 +358,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
             if (max_B > wanted_B){
                 if (p_seq > wanted_B && p_seq <=max_B){
                     buffer_B.put(p_seq,packet);
+                    b_send_ACK(wanted_B);
                 }else {
                     b_send_ACK(wanted_B);
                 }
