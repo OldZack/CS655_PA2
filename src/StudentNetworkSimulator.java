@@ -309,10 +309,29 @@ public class StudentNetworkSimulator extends NetworkSimulator
             return;
         }
         System.out.println("Packet received at B with seq number " + p_seq + ", payload: " + msg);
+
+        /**stop and wait model*/
+        if(max_B == wanted_B){
+            if (p_seq == wanted_B){
+                wanted_B = (wanted_B +1)%LimitSeqNo;
+                max_B = (max_B +1)%LimitSeqNo;
+                toLayer5(packet.getPayload());
+                deliveredPktNum++;
+
+                b_send_ACK(wanted_B);
+                return;
+            }
+            else {
+                b_send_ACK(wanted_B);
+                return;
+            }
+        }
+
         if (p_seq == wanted_B){
             buffer_B.put(wanted_B,packet);
             /**When current_B packet is received*/
             while(buffer_B.get(wanted_B) != null){
+                System.out.println("tery "+buffer_B.toString());
                 toLayer5(buffer_B.get(wanted_B).getPayload());
                 System.out.println("what "+ buffer_B.get(wanted_B).getSeqnum()+" hell "+ buffer_B.get(wanted_B).getPayload());
 
@@ -356,7 +375,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
     {
         buffer_B = new HashMap<>();
         wanted_B = 0;
-        max_B = (wanted_B+WindowSize) % LimitSeqNo;
+        max_B = (wanted_B+WindowSize-1) % LimitSeqNo;
     }
 
     // Use to print final statistics
