@@ -288,7 +288,6 @@ public class StudentNetworkSimulator extends NetworkSimulator
         Packet p = new Packet(-1,ack,-1);
         System.out.println("Packet sent by B with ack number " + ack);
         toLayer3(B,p);
-        System.out.println("this is "+ack);
         ackPktNum += 1;
     }
 
@@ -303,7 +302,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
         String msg = packet.getPayload();
         int p_seq = packet.getSeqnum();
         int checksum = msg.hashCode();
-        if (packet.getChecksum() != checksum){
+        if (packet.getChecksum() != checksum || p_seq < 0 || p_seq >= 2*WindowSize || packet.getAcknum() != -1){
             System.out.println("Checksum failed, packet from A is corrupted!");
             corruptPktNum += 1;
             return;
@@ -331,10 +330,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
             buffer_B.put(wanted_B,packet);
             /**When current_B packet is received*/
             while(buffer_B.get(wanted_B) != null){
-                System.out.println("tery "+buffer_B.toString());
                 toLayer5(buffer_B.get(wanted_B).getPayload());
-                System.out.println("what "+ buffer_B.get(wanted_B).getSeqnum()+" hell "+ buffer_B.get(wanted_B).getPayload());
-
                 deliveredPktNum += 1;
 
                 buffer_B.remove(wanted_B);
