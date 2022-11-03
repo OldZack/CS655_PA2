@@ -173,6 +173,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
         if (timerFlag_a == false){
             startTimer(0, RxmtInterval);
             timerFlag_a = true;
+            System.out.println("Duplicate ack received, resend the next missing packet.");
         }
         if (q.equals(unsentBuffer_a)){
             // Record the sent time to calculate RTT & communication time
@@ -220,9 +221,9 @@ public class StudentNetworkSimulator extends NetworkSimulator
         int originAckNum = packet.getAcknum();
         int ackNum = originAckNum;
         receivedPktNum += 1;
-        System.out.println("Packet received at A with ack number " + originAckNum);
         // Check if the packet is corrupted.
         if (packet.getSeqnum() == -1 && packet.getPayload().equals("") && ackNum >= 0 && ackNum < 2*WindowSize){
+            System.out.println("Packet received at A with ack number " + originAckNum);
             // Stop timer when ack received.
             if (timerFlag_a == true){
                 stopTimer(0);
