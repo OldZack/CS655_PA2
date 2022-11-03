@@ -221,16 +221,19 @@ public class StudentNetworkSimulator extends NetworkSimulator
         int ackNum = originAckNum;
         receivedPktNum += 1;
         System.out.println("Packet received at A with ack number " + originAckNum);
+        // Check if the packet is corrupted.
         if (packet.getSeqnum() == -1 && packet.getPayload().equals("") && ackNum >= 0 && ackNum < 2*WindowSize){
             // Stop timer when ack received.
             if (timerFlag_a == true){
                 stopTimer(0);
                 timerFlag_a = false;
             }
+            // If duplicate ack received, resend next missing data.
             if (ackNum == lastAckNum_a){
                 sendPacket(resentBuffer_a);
             }
             else {
+                // If the new ack number is smaller than the old one, add RWS to get the number of newly acked packets.
                 if (ackNum < lastAckNum_a) {
                     ackNum += 2*WindowSize;
                 }
@@ -293,7 +296,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
     // (i.e. as a result of a toLayer3() being done by an A-side procedure)
     // arrives at the B-side.  "packet" is the (possibly corrupted) packet
     // sent from the A-side.
-    //上传的+1
+    //
     protected void bInput(Packet packet)
     {
         receivedPktNum += 1;

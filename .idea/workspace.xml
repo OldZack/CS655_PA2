@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="69774017-4603-4780-8f14-e9e97ed5369f" name="Changes" comment="not using2" />
+    <list default="true" id="69774017-4603-4780-8f14-e9e97ed5369f" name="Changes" comment="Added RTT and CT calculation">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StudentNetworkSimulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/StudentNetworkSimulator.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -78,7 +81,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667428890246</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Added RTT and CT calculation">
+      <created>1667445870989</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1667445870989</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -95,6 +105,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Sender side implemented" />
     <MESSAGE value="Some bugs fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Some bugs fixed" />
+    <MESSAGE value="Added RTT and CT calculation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added RTT and CT calculation" />
   </component>
 </project>
