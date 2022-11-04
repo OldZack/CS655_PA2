@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="69774017-4603-4780-8f14-e9e97ed5369f" name="Changes" comment="Delete Some Printouts">
+    <list default="true" id="69774017-4603-4780-8f14-e9e97ed5369f" name="Changes" comment="Delete some useless variables.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/StudentNetworkSimulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/StudentNetworkSimulator.java" afterDir="false" />
     </list>
@@ -119,7 +119,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667505043354</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Delete some useless variables.">
+      <created>1667517403079</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1667517403079</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -138,6 +145,7 @@
     <MESSAGE value="Some bugs fixed" />
     <MESSAGE value="Added RTT and CT calculation" />
     <MESSAGE value="Delete Some Printouts" />
-    <option name="LAST_COMMIT_MESSAGE" value="Delete Some Printouts" />
+    <MESSAGE value="Delete some useless variables." />
+    <option name="LAST_COMMIT_MESSAGE" value="Delete some useless variables." />
   </component>
 </project>

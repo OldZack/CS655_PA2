@@ -400,6 +400,9 @@ public class StudentNetworkSimulator extends NetworkSimulator
 
         // PRINT YOUR OWN STATISTIC HERE TO CHECK THE CORRECTNESS OF YOUR PROGRAM
         System.out.println("\nEXTRA:");
+
+        System.out.println("Throughput: " + ((double)originPktNum + (double)retransPktNum)/getTime());
+        System.out.println("Goodput: " + (double)originPktNum/getTime());
         // EXAMPLE GIVEN BELOW
         //System.out.println("Example statistic you want to check e.g. number of ACK packets received by A :" + "<YourVariableHere>");
     }
