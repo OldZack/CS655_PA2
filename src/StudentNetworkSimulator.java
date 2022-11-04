@@ -99,7 +99,6 @@ public class StudentNetworkSimulator extends NetworkSimulator
     private int deliveredPktNum;
     private int ackPktNum;
     private int corruptPktNum;
-    private int receivedPktNum;
 
     // Calculating RTT variables
     ArrayList<Double> RTTList;
@@ -124,7 +123,6 @@ public class StudentNetworkSimulator extends NetworkSimulator
     private int nextSeqNum_a;
     private int lastAckNum_a;
     private boolean timerFlag_a;
-    private int currSeqNum_a;
 
     // Variables for the receiver (B)
     private HashMap<Integer,Packet> buffer_B;
@@ -152,8 +150,6 @@ public class StudentNetworkSimulator extends NetworkSimulator
         deliveredPktNum = 0;
         ackPktNum = 0;
         corruptPktNum = 0;
-        receivedPktNum = 0;
-        currSeqNum_a = 0;
 
         RTTList = new ArrayList<Double>();
         CTList = new ArrayList<Double>();
@@ -219,7 +215,6 @@ public class StudentNetworkSimulator extends NetworkSimulator
     {
         int originAckNum = packet.getAcknum();
         int ackNum = originAckNum;
-        receivedPktNum += 1;
         // Check if the packet is corrupted.
         if (packet.getSeqnum() == -1 && packet.getPayload().equals("") && ackNum >= 0 && ackNum < 2*WindowSize){
             System.out.println("Packet received at A with ack number " + originAckNum);
@@ -299,7 +294,6 @@ public class StudentNetworkSimulator extends NetworkSimulator
     //
     protected void bInput(Packet packet)
     {
-        receivedPktNum += 1;
         String msg = packet.getPayload();
         int p_seq = packet.getSeqnum();
         int checksum = msg.hashCode();
