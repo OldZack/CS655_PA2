@@ -179,7 +179,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
         }
         else{
             // Remove the record for RTT since the pkt is retransmitted.
-            sendTime.remove(q.peek().getSeqnum());
+            sendTime.clear();
             retransPktNum += 1;
         }
     }
@@ -236,6 +236,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
                 // use reception time of the ack to calculate RTT (if the sent time is recorded in map)
                 if (sendTime.containsKey(originAckNum-1)){
                     RTTList.add(getTime()-sendTime.get(originAckNum-1));
+                    System.out.println("RTT Discovered: " + (originAckNum-1) + " " + RTTList);
                 }
 
                 for (int i = 0; i < (ackNum-lastAckNum_a); i++){
@@ -379,6 +380,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
         Double totalRTT = Double.valueOf(0);
         for (int i = 0; i < RTTList.size(); i++){
             totalRTT += RTTList.get(i);
+            System.out.println(RTTList.get(i));
         }
 
         Double totalCT = Double.valueOf(0);
