@@ -391,6 +391,7 @@ public class StudentNetworkSimulator extends NetworkSimulator
         for (int i = 0; i < CTList.size(); i++){
             totalCT += CTList.get(i);
         }
+
         // TO PRINT THE STATISTICS, FILL IN THE DETAILS BY PUTTING VARIBALE NAMES. DO NOT CHANGE THE FORMAT OF PRINTED OUTPUT
         System.out.println("\n\n===============STATISTICS=======================");
         System.out.println("Number of original packets transmitted by A:" + originPktNum);

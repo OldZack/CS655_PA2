@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="69774017-4603-4780-8f14-e9e97ed5369f" name="Changes" comment="Delete Some Printouts">
+    <list default="true" id="69774017-4603-4780-8f14-e9e97ed5369f" name="Changes" comment="testing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StudentNetworkSimulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/StudentNetworkSimulator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,6 +131,7 @@
     <MESSAGE value="Some bugs fixed" />
     <MESSAGE value="Added RTT and CT calculation" />
     <MESSAGE value="Delete Some Printouts" />
-    <option name="LAST_COMMIT_MESSAGE" value="Delete Some Printouts" />
+    <MESSAGE value="testing" />
+    <option name="LAST_COMMIT_MESSAGE" value="testing" />
   </component>
 </project>
